@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f0818dac-b5cc-448c-aab9-6c7a2bfa11dc" name="Default" comment="websocket can communicate">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="DELETED" beforePath="Z:/README.md" afterPath="" />
       <change type="DELETED" beforePath="Z:/ke/ke" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -38,8 +37,8 @@
       <file leaf-file-name="webServer.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webServer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+            <state relative-caret-position="440">
+              <caret line="22" column="40" lean-forward="true" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -175,7 +174,7 @@
       <workItem from="1509076701950" duration="842000" />
       <workItem from="1509077618266" duration="5094000" />
       <workItem from="1509126516541" duration="174000" />
-      <workItem from="1509126796599" duration="859000" />
+      <workItem from="1509126796599" duration="1021000" />
     </task>
     <task id="LOCAL-00001" summary="websocket can communicate">
       <created>1508109264502</created>
@@ -219,11 +218,18 @@
       <option name="project" value="LOCAL" />
       <updated>1509127649504</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="websocket can communicate">
+      <created>1509127672902</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1509127672902</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27214000" />
+    <option name="totallyTimeSpent" value="27376000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -664,8 +670,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webServer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        <state relative-caret-position="440">
+          <caret line="22" column="40" lean-forward="true" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
           <folding />
         </state>
       </provider>
