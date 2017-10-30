@@ -41,74 +41,67 @@ var extensions = { };
 
 // This callback function is called every time someone
 // tries to connect to the WebSocket server
-wss.on('connection', function(ws) {
+wss.on('connection', function(ws, res) {
+    console.dir(ws);
 
-    console.log((new Date()) + ' Connection from origin ' + ws.origin.split('//') + '.');
-    console.log((new Date()) + ' Connection from remoteAddress ' + ws.remoteAddress + '.');
-    console.log((new Date()) + ' Connection from resource ' + ws.resource + '.');
+    console.log((new Date()) + ' Connection from origin ' + res.headers.origin.split('//') + '.');
+    console.log((new Date()) + ' Connection from remoteAddress ' + res.headers.host + '.');
 
-    var index = clients.push(connection) - 1;
+    var index = clients.push(ws) - 1;
     console.log((new Date()) + ' Connection accepted.');
 
     // user sent some message
     ws.on('message', function (message) {
-        console.log('receive: %s', message.creator.name);
+        console.dir(message);
+        console.log('receive: %s', JSON.parse(message).log.creator.name);
+
+        var chromeExtension = res.headers.origin.split('//');
+        var extensionId = chromeExtension[chromeExtension.length - 1];
+
+        var har = JSON.parse(message);
+        var tabId = har.log.creator.name;
 
 
-        if (message.type == 'utf8') { // accept only text
-            //var tabUrl = new URL(JSON.parse(message.utf8Data).tabUrl);
-            //console.log(tabUrl.host);
-            var chromeExtension = ws.origin.split('//');
-            var extensionId = chromeExtension[chromeExtension.length - 1];
+        /*
+        var requestInfo = JSON.parse(message.utf8Data);
+        var tabId = requestInfo.tabId;
+        var tabUrl = requestInfo.tabUrl;
 
-            var har = JSON.parse(message.utf8Data);
-            var tabId = har.creator.name;
-
-
-            /*
-            var requestInfo = JSON.parse(message.utf8Data);
-            var tabId = requestInfo.tabId;
-            var tabUrl = requestInfo.tabUrl;
-
-            // init extension struct
-            if (!extensions[extensionId]) {
-                extensions[extensionId] = {
-                    id: extensionId,
-                    tabs: {}
-                }
+        // init extension struct
+        if (!extensions[extensionId]) {
+            extensions[extensionId] = {
+                id: extensionId,
+                tabs: {}
             }
-
-            // init tab struct
-            if (!extensions[extensionId].tabs[tabId]) {
-                extensions[extensionId].tabs[tabId] = {
-                    id: tabId,
-                    urls: []
-                }
-            }
-
-            // push url under the tab
-            extensions[extensionId].tabs[tabId].urls.push(tabUrl);
-            */
-
-            if (!fs.existsSync(extensionId)) {
-                fs.mkdir(extensionId, function (err) {
-                    if (err) throw (err);
-                });
-            }
-
-
-            //var tabUrl = modify(JSON.parse(message.utf8Data).tabUrl);
-            var tabHarPath = path.join(extensionId, 'tab-' + tabId + '.har');
-            fs.appendFile(tabHarPath, JSON.stringify(har, null, 2), 'utf8', function (err) {
-                if (err) throw err;
-            });
-
-
         }
+
+        // init tab struct
+        if (!extensions[extensionId].tabs[tabId]) {
+            extensions[extensionId].tabs[tabId] = {
+                id: tabId,
+                urls: []
+            }
+        }
+
+        // push url under the tab
+        extensions[extensionId].tabs[tabId].urls.push(tabUrl);
+        */
+
+        if (!fs.existsSync(extensionId)) {
+            fs.mkdir(extensionId, function (err) {
+                if (err) throw (err);
+            });
+        }
+
+
+        //var tabUrl = modify(JSON.parse(message.utf8Data).tabUrl);
+        var tabHarPath = path.join(extensionId, 'tab-' + tabId + '.har');
+        fs.appendFile(tabHarPath, JSON.stringify(har, null, 2), 'utf8', function (err) {
+            if (err) throw err;
+        });
+
     });
-
-    // user disconnected
-    //connection.on('close', function(connection) {
-
 });
+
+
 
