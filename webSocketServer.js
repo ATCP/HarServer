@@ -45,18 +45,22 @@ wss.on('connection', function(ws, res) {
     console.dir(ws);
 
     console.log((new Date()) + ' Connection from origin ' + res.headers.origin.split('//') + '.');
-    console.log((new Date()) + ' Connection from remoteAddress ' + res.headers.host + '.');
+    console.log((new Date()) + ' Connection from remoteAddress ' + ws._socket.remoteAddress + ':' + ws._socket.remotePort);
 
     var index = clients.push(ws) - 1;
     console.log((new Date()) + ' Connection accepted.');
 
     // user sent some message
     ws.on('message', function (message) {
-        console.dir(message);
-        console.log('receive: %s', JSON.parse(message).log.creator.name);
+        //console.dir(message);
+        console.log('receive har id %s from host %s', JSON.parse(message).log.creator.name, res.headers.host);
 
         var chromeExtension = res.headers.origin.split('//');
         var extensionId = chromeExtension[chromeExtension.length - 1];
+
+	var remoteClient = ws._socket.remoteAddress.split(':');
+	var remoteIP = remoteClient[remoteClient.length - 1];
+	var remotePort = ws._socket.remotePort;
 
         var har = JSON.parse(message);
         var tabId = har.log.creator.name;
@@ -87,15 +91,15 @@ wss.on('connection', function(ws, res) {
         extensions[extensionId].tabs[tabId].urls.push(tabUrl);
         */
 
-        if (!fs.existsSync(extensionId)) {
-            fs.mkdir(extensionId, function (err) {
+        if (!fs.existsSync(remoteIP + '.' + remotePort)) {
+            fs.mkdir(remoteIP + '.' + remotePort, function (err) {
                 if (err) throw (err);
             });
         }
 
 
         //var tabUrl = modify(JSON.parse(message.utf8Data).tabUrl);
-        var tabHarPath = path.join(extensionId, 'tab-' + tabId + '.har');
+        var tabHarPath = path.join(remoteIP + '.' + remotePort, 'tab-' + tabId + '.har');
         fs.appendFile(tabHarPath, JSON.stringify(har, null, 2), 'utf8', function (err) {
             if (err) throw err;
         });
