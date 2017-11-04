@@ -1,27 +1,38 @@
 'use strict'
 
 var express = require("express");
-
 var app = express();
+var execPHP = require('./execphp.js')();
+
+execPHP.phpFolder = '.';
 
 var webServerPort = 8080;
 
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    //res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
 
     //res.header("X-Powered-By",' 3.2.1')
-    //res.header("Content-Type", "application/json;charset=utf-8");
+    //res.header("Content-Type", "application/javascript;charset=utf-8");
     next();
 });
 
 
-app.use(express.static(__dirname + '/public'));
+//app.use(express.static(__dirname + '/public'));
+
+app.use('*.php',function(request,response,next) {
+	console.log(request.originalUrl);
+
+	execPHP.parseFile(request.originalUrl,function(phpResult) {
+		response.write(phpResult);
+		response.end();
+	});
+});
 
 /* serves main page */
 app.get("/", function(req, res) {
-    res.sendFile('index.html')
+    res.sendfile('index.html')
 });
 
 app.post("/user/add", function(req, res) {

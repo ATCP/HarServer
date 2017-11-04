@@ -53,7 +53,7 @@ wss.on('connection', function(ws, res) {
     // user sent some message
     ws.on('message', function (message) {
         //console.dir(message);
-        console.log('receive har id %s from host %s', JSON.parse(message).log.creator.name, ws._socket.remoteAddress + ':' + ws._socket.remotePort);
+    console.log('receive har id %s from host %s', JSON.parse(message).log.creator.name, ws._socket.remoteAddress + ':' + ws._socket.remotePort);
 
         var chromeExtension = res.headers.origin.split('//');
         var extensionId = chromeExtension[chromeExtension.length - 1];
