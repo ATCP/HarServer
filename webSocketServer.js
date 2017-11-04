@@ -42,7 +42,7 @@ var extensions = { };
 // This callback function is called every time someone
 // tries to connect to the WebSocket server
 wss.on('connection', function(ws, res) {
-    console.dir(ws);
+    //console.dir(ws);
 
     console.log((new Date()) + ' Connection from origin ' + res.headers.origin.split('//') + '.');
     console.log((new Date()) + ' Connection from remoteAddress ' + ws._socket.remoteAddress + ':' + ws._socket.remotePort);
@@ -53,7 +53,7 @@ wss.on('connection', function(ws, res) {
     // user sent some message
     ws.on('message', function (message) {
         //console.dir(message);
-        console.log('receive har id %s from host %s', JSON.parse(message).log.creator.name, res.headers.host);
+        console.log('receive har id %s from host %s', JSON.parse(message).log.creator.name, res._socket_remoteAddress + ':' + ws._socket.remotePort);
 
         var chromeExtension = res.headers.origin.split('//');
         var extensionId = chromeExtension[chromeExtension.length - 1];
