@@ -91,7 +91,7 @@ wss.on('connection', function(ws, res) {
         */
 
         var now = new Date();
-        var logDir = now.getFullYear() + "-"+ now.getMonth() + "-" + now.getDay();
+        var logDir = now.getFullYear() + "-"+ (now.getMonth() + 1) + "-" + now.getDate();
 
         if (!fs.existsSync(logDir)) {
             fs.mkdir(logDir, function (err) {
