@@ -43,7 +43,7 @@ if (is_dir($dir)) {
     <script src="scripts/jquery.js"></script>
     <script data-main="scripts/harViewer" src="scripts/require.js"></script>
     <script>
-    $("#content").bind("onViewerPreInit", function(event) {	
+    $("#content").bind("onViewerInit", function(event) {	
 
         // Get application object
 	var viewer = event.target.repObject;

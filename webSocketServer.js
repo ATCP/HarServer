@@ -37,6 +37,16 @@ function modify(url) {
     return _url;
 }
 
+Date.prototype.yyyymmdd = function() {
+    var mm = this.getMonth() + 1; // getMonth() is zero-based
+    var dd = this.getDate();
+
+    return [this.getFullYear(),
+                (mm>9 ? '' : '0') + mm,
+		(dd>9 ? '' : '0') + dd
+	   ].join('-');
+};
+
 var extensions = { };
 
 // This callback function is called every time someone
@@ -91,7 +101,8 @@ wss.on('connection', function(ws, res) {
         */
 
         var now = new Date();
-        var logDir = now.getFullYear() + "-"+ (now.getMonth() + 1) + "-" + now.getDate();
+        //var logDir = now.getFullYear() + "-"+ (now.getMonth() + 1) + "-" + now.getDate();
+	var logDir = now.yyyymmdd();
 
         if (!fs.existsSync(logDir)) {
             fs.mkdir(logDir, function (err) {
